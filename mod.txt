@@ -1,6 +1,13 @@
 {
     "name" : "Weapon Pickup",
     "description" : "Allows picking up weapons from dead people.",
+    "updates" : [
+        {
+            "revision" : 1,
+            "identifier" : "rokkweaponpickup",
+            "install_folder" : "WeaponPickup"
+        }
+    ],
     "hooks" : [
         {
             "hook_id" : "lib/units/enemies/cop/copmovement",

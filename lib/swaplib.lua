@@ -89,6 +89,7 @@ function WeaponSwap:init(config)
     dummy_slot = 1, --weapon slot for both primary/secondary categories to use, starts from 1(top left)
 
     --dummy weapons, order is important for unpack(); weapon_id, then blueprint(optional, though try to provide enough mods to replace with target mods)
+    --[[
     dummy_weapon_primaries = { --could do with a weapon with more mods (I'm lazy)
       'ksg', --weapon_id
       { --blueprint
@@ -97,6 +98,23 @@ function WeaponSwap:init(config)
         'wpn_fps_upg_ns_sho_salvo_large',
         'wpn_fps_upg_o_mbus_rear',
         'wpn_fps_upg_fl_ass_utg'
+      }
+    },
+    ]]
+    dummy_weapon_primaries = { --Got you covered on the better dummy weapons
+      'new_m4', --weapon_id
+      { --blueprint
+        "wpn_fps_m16_s_solid",
+        "wpn_fps_m4_uupg_draghandle",
+        "wpn_fps_m4_uupg_b_long",
+        "wpn_fps_upg_ass_ns_surefire",
+        "wpn_fps_upg_fg_smr",
+        "wpn_fps_upg_fl_ass_utg",
+        "wpn_fps_upg_m4_g_mgrip",
+        "wpn_fps_upg_ass_m4_lower_reciever_core",
+        "wpn_fps_upg_m4_m_pmag",
+        "wpn_fps_upg_o_docter",
+        "wpn_fps_m4_upper_reciever_edge"
       }
     },
     dummy_weapon_secondaries = {
