@@ -1,0 +1,34 @@
+{
+    "name" : "Weapon Pickup",
+    "description" : "Allows picking up weapons from dead people.",
+    "hooks" : [
+        {
+            "hook_id" : "lib/units/enemies/cop/copmovement",
+            "script_path" : "lua/copmovement.lua"
+        },
+        {
+            "hook_id" : "lib/units/beings/player/playerinventory",
+            "script_path" : "lua/playerinventory.lua"
+        }
+    ],
+	"keybinds" : [
+		{
+			"keybind_id" : "pickup_weapon",
+			"name" : "Pickup Weapon",
+			"description" : "Press this button to pick up a fallen enemy's weapon.",
+			"script_path" : "keybinds/pickupweapon.lua",
+			"run_in_menu" : false,
+			"run_in_game" : true,
+			"localized" : false
+		},
+		{
+			"keybind_id" : "dbg_generate_definitions",
+			"name" : "DEBUG: GENERATE DEFINITIONS",
+			"description" : "Debug function used to generate the first-time JSON file. If you see this, report this to Rokk ASAP!",
+			"script_path" : "keybinds/generatedefinitions.lua",
+			"run_in_menu" : true,
+			"run_in_game" : true,
+			"localized" : false
+		}
+	]
+}
