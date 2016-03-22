@@ -44,7 +44,10 @@ for i, v in pairs(corpses) do
     --local cop_tweak = v.unit:base():char_tweak()
     local cop_weapon = v.unit:inventory():get_weapon()
     if not cop_weapon then
-        cop_weapon = v.unit:unit_data()._wp_weapon
+        cop_weapon = v.unit:inventory()._wp_weapon
+        if not cop_weapon then
+            log("[WEAPONPICKUP_FATAL]Cop weapon could not be retrieved!")
+        end
     end
     local cop_weapon_name_id = cop_weapon:base():get_name_id()
     
@@ -52,19 +55,55 @@ for i, v in pairs(corpses) do
     
     if dis_sq < max_dis_sq then
         corpses_nearby = true
-        log("[weaponpickup_notice]Enemy corpse is nearby!")
         --Match cop's weapon against definition table
         if WeaponPickup.WeaponDefinitions[cop_weapon_name_id] then
+            
+            --Get the translated weapon from the definitions table.
             local definition = WeaponPickup.WeaponDefinitions[cop_weapon_name_id]
+            
+            --Set weapon's ammo to 1 magazine, and disable ammo pickup.
+            tweak_data.weapon[definition.name_id].AMMO_PICKUP = {0,0}
+            tweak_data.weapon[definition.name_id].AMMO_MAX = tweak_data.weapon[definition.name_id].CLIP_AMMO_MAX
+            
+            --Remember the player's current selection.
+            local old_selection = player_unit:inventory():equipped_selection()
+            log("Player's old selection is "..old_selection)
+            
+            --The wanted selection should be the *opposite* weapon slot that the swap weapon is for.
+            local selection_wanted = tweak_data.weapon[definition.name_id].use_data.selection_index == 1 and 2 or 1
+            log("Wanted selection is "..selection_wanted)
+            
+            --Swap player's weapon.
+            player_unit:camera():play_redirect(player_unit:movement():current_state().IDS_UNEQUIP)
+            player_unit:inventory():equip_selection(selection_wanted, true)
+            
+            --Give weapon to player.
             InGame_WeaponSwap:set_weapon(definition.name_id, definition.blueprint)
             player_unit:camera():play_redirect(player_unit:movement():current_state().IDS_EQUIP)
+            
+            --Swap player weapon back again after one second, to prevent errors.
+            DelayedCalls:Add("WeaponPickup_swap", 1, function()
+                player_unit:inventory():equip_selection(old_selection, true)
+                player_unit:camera():play_redirect(player_unit:movement():current_state().IDS_EQUIP)
+            end)
+            --player_unit:inventory():equip_selection(old_selection)
+            
+            --Set this weapon's ammo pickup to 0.
+            --[[
+            local weapon = player_unit:inventory():equipped_unit():base()
+            local weapon_id = weapon:get_name_id()
+            tweak_data.weapon[weapon_id].AMMO_PICKUP = {0,0}
+            
+            --Set this weapon's ammo to 1 magazine.
+            weapon:set_ammo_max(weapon:get_ammo_max_per_clip())
+            weapon:set_ammo_total(weapon:get_ammo_max_per_clip())
+            ]]
+            
+            --Selection index of secondary weapon is 1, primary weapon is 2.
+            
             break
         else
-            log("[WEAPONPICKUP_WARN]Weapon definition '"..cop_weapon_name_id.."' did not match anything!")
+            log("[WEAPONPICKUP_WARN]Weapon definition '"..cop_weapon_name_id.."' did not match anything! Notify Rokk.")
         end
     end
-end
-
-if not corpses_nearby then
-    log("[weaponpickup_notice]No enemy corpse nearby.")
 end

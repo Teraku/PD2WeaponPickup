@@ -1,4 +1,5 @@
 local definitions = {
+    ["_credits"] = "Thanks to SC for finding out the specific weapons used by NPC's. Without him, this mod would probably not be finished.",
     --Regular guard weapons
     ["c45_npc"] = {
         ["name_id"] = "g22c",
@@ -8,14 +9,15 @@ local definitions = {
             "wpn_fps_pis_g18c_m_mag_17rnd"            
         }
     },
-    --Murkywater guard weapons
+    --Murkywater guard and GenSec Elite weapons.
     ["ump_npc"] = {
-        ["name_id"] = "g36",
+        ["name_id"] = "new_mp5",
         ["blueprint"] = {
-            "wpn_fps_ass_g36_s_standard",
-            "wpn_fps_ass_g36_m_standard",
-            "wpn_fps_ass_g36_b_long",
-            "wpn_fps_ass_g36_fg_ksk"          
+            "wpn_fps_smg_mp5_body_mp5",
+            "wpn_fps_smg_mp5_fg_mp5a4",
+            "wpn_fps_smg_mp5_s_solid",
+            "wpn_fps_smg_mp5_m_straight",
+            "wpn_fps_upg_o_t1micro"
         }
     },
     --Mendoza Gangster weapons
@@ -47,7 +49,7 @@ local definitions = {
             "wpn_fps_pis_rage_b_long"
         }
     },
-    --Remington 870 used by the SWAT shotgunners (not the green ones).
+    --Remington 870 used by the SWAT shotgunners.
     ["r870_npc"] = {
         ["name_id"] = "r870",
         ["blueprint"] = {
@@ -72,10 +74,29 @@ local definitions = {
             "wpn_fps_upg_o_eotech",             
             "wpn_fps_m4_upper_reciever_edge"
         }
+    },
+    --G36 used by GenSec Elites.
+    ["g36_npc"] = {
+        ["name_id"] = "g36",
+        ["blueprint"] = {
+            "wpn_fps_ass_g36_s_standard",
+            "wpn_fps_ass_g36_m_standard",
+            "wpn_fps_ass_g36_b_long",
+            "wpn_fps_ass_g36_fg_k",
+            "wpn_fps_upg_o_eotech"
+        }
+    },
+    --MP9 used by all kinds of shields.
+    ["mp9_npc"] = {
+        ["name_id"] = "mp9",
+        ["blueprint"] = {
+            "wpn_fps_smg_mp9_body_mp9",
+            "wpn_fps_smg_mp9_s_fold",
+            "wpn_fps_smg_mp9_b_dummy",
+            "wpn_fps_smg_mp9_m_extended"
+        }
     }
 }
-
---TODO:
 
 
 local path = "mods/WeaponPickup/"

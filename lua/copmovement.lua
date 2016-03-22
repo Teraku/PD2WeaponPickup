@@ -3,6 +3,6 @@
 Hooks:PostHook(CopMovement, "_post_init", "WeaponPickup_CopMovementPostInit", function(self)
 
     local unit = self._unit
-    unit:unit_data()._wp_weapon = self._ext_inventory:get_weapon()
+    unit:inventory()._wp_weapon = self._ext_inventory:get_weapon()
 
 end)
