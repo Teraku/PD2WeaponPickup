@@ -47,6 +47,7 @@ for i, v in pairs(corpses) do
         cop_weapon = v.unit:inventory()._wp_weapon
         if not cop_weapon then
             log("[WEAPONPICKUP_FATAL]Cop weapon could not be retrieved!")
+            break
         end
     end
     local cop_weapon_name_id = cop_weapon:base():get_name_id()
@@ -61,17 +62,24 @@ for i, v in pairs(corpses) do
             --Get the translated weapon from the definitions table.
             local definition = WeaponPickup.WeaponDefinitions[cop_weapon_name_id]
             
-            --Set weapon's ammo to 1 magazine, and disable ammo pickup.
+            --Get the amount of magazines that should be given to the player.
+            local cop_tweak_data = v.unit:base():char_tweak()
+            local mags = 1
+            if cop_tweak_data.weaponpickup_mags then
+                mags = cop_tweak_data.weaponpickup_mags
+            end
+            
+            --Set weapon's ammo to 1 mag (or more if special), and disable ammo pickup.
             tweak_data.weapon[definition.name_id].AMMO_PICKUP = {0,0}
-            tweak_data.weapon[definition.name_id].AMMO_MAX = tweak_data.weapon[definition.name_id].CLIP_AMMO_MAX
+            tweak_data.weapon[definition.name_id].AMMO_MAX = tweak_data.weapon[definition.name_id].CLIP_AMMO_MAX * mags
             
             --Remember the player's current selection.
             local old_selection = player_unit:inventory():equipped_selection()
-            log("Player's old selection is "..old_selection)
+            --log("Player's old selection is "..old_selection)
             
             --The wanted selection should be the *opposite* weapon slot that the swap weapon is for.
             local selection_wanted = tweak_data.weapon[definition.name_id].use_data.selection_index == 1 and 2 or 1
-            log("Wanted selection is "..selection_wanted)
+            --log("Wanted selection is "..selection_wanted)
             
             --Swap player's weapon.
             player_unit:camera():play_redirect(player_unit:movement():current_state().IDS_UNEQUIP)

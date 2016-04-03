@@ -1,5 +1,5 @@
 local definitions = {
-    ["_credits"] = "Thanks to SC for finding out the specific weapons used by NPC's. Without him, this mod would probably not be finished.",
+    ["_credits"] = "Thanks to SC for finding out these specific weapons used by NPC's.",
     --Regular guard weapons
     ["c45_npc"] = {
         ["name_id"] = "g22c",
