@@ -33,7 +33,7 @@ Hooks:PostHook(HUDObjectives, "init", "ObjectivesWeaponPickup", function(self, h
 		y = 0,
 		h = 155, 
 		w = 170,
-		valign = "top", 
+		valign = "top",
 		blend_mode = "normal"
 	})
 	local wp_bg = self.wp_panel:bitmap( {
@@ -47,13 +47,15 @@ Hooks:PostHook(HUDObjectives, "init", "ObjectivesWeaponPickup", function(self, h
             45,
             50
         },
-		vertical = "top"
+		vertical = "top",
 	})
     
-	self.wp_panel:set_top(self._bg_box:bottom())
+    self.wp_panel:set_top(self._bg_box:bottom())
 	wp_bg:set_left(self._full_hud_panel:left())
 	wp_bg:set_top(self._bg_box:bottom() + 10)	
 	--wp_bg:set_left(self._full_hud_panel:left())
+    
+    self.wp_panel:set_left(self._full_hud_panel:right() - wp_bg:w())
 end)
 
 --[[
